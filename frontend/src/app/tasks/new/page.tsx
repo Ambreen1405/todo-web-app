@@ -61,7 +61,7 @@ const NewTaskPage: React.FC = () => {
         token!
       );
 
-      if (result.success) {
+      if (result.success && result.task) {
         // Trigger event to update dashboard stats
         window.dispatchEvent(new CustomEvent('task-updated'));
 

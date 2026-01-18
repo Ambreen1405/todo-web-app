@@ -85,19 +85,21 @@ const RecentActivity: React.FC<RecentActivityProps> = ({ className = '' }) => {
   // Map actions to user-friendly messages
   const getActivityMessage = (activity: ActivityItem): string => {
     const { action, task_title } = activity;
+    const taskTitle = task_title || 'Unknown Task';
+
     switch (action) {
       case 'task_created':
-        return `Task '${task_title}' was created`;
+        return `Task '${taskTitle}' was created`;
       case 'task_updated':
-        return `Task '${task_title}' was updated`;
+        return `Task '${taskTitle}' was updated`;
       case 'task_deleted':
-        return `Task '${task_title}' was deleted`;
+        return `Task '${taskTitle}' was deleted`;
       case 'task_completed':
-        return `Task '${task_title}' was completed`;
+        return `Task '${taskTitle}' was completed`;
       case 'task_uncompleted':
-        return `Task '${task_title}' was marked as incomplete`;
+        return `Task '${taskTitle}' was marked as incomplete`;
       default:
-        return `Task '${task_title}' was updated`;
+        return `Task '${taskTitle}' was updated`;
     }
   };
 
@@ -165,13 +167,13 @@ const RecentActivity: React.FC<RecentActivityProps> = ({ className = '' }) => {
     <div className={`bg-white rounded-xl shadow-md p-6 ${className}`}>
       <div className="space-y-4">
         {activities.map((activity) => {
-          const { icon, color } = getActionIconAndColor(activity.action);
+          const { icon, color } = getActionIconAndColor(activity.action || '');
           return (
             <div key={activity.id} className="flex items-start space-x-3">
               <div className={`${color} text-xl`}>{icon}</div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-gray-800 truncate">{getActivityMessage(activity)}</p>
-                <p className="text-xs text-gray-500 mt-1">{formatTimeAgo(activity.created_at)}</p>
+                <p className="text-xs text-gray-500 mt-1">{activity.created_at ? formatTimeAgo(activity.created_at) : 'Recently'}</p>
               </div>
             </div>
           );

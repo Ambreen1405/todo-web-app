@@ -194,7 +194,7 @@ const DashboardPage: React.FC = () => {
         <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
           {user ? (
-            <RecentActivity userId={user.id} />
+            <RecentActivity />
           ) : (
             <div className="text-center py-8 text-gray-500">
               <p>Loading activity...</p>

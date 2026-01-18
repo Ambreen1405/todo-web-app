@@ -1,7 +1,7 @@
 import { apiClient } from './client';
 import { Task } from '../types/task';
 
-interface CreateTaskData {
+export interface CreateTaskData {
   title: string;
   description?: string;
   priority?: 'low' | 'medium' | 'high';
@@ -10,7 +10,7 @@ interface CreateTaskData {
   category?: 'work' | 'home' | 'other';
 }
 
-interface UpdateTaskData {
+export interface UpdateTaskData {
   title?: string;
   description?: string;
   completed?: boolean;

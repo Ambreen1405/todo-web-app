@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getAuthSession } from '../../utils/auth';
 import Logout from '../../components/Auth/Logout';
-import TaskList from '../../components/Task/TaskList';
+import ClientTaskListWrapper from '../../components/Task/ClientTaskListWrapper';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
               </p>
             </div>
 
-            <TaskList onTaskUpdate={() => {}} />
+            <ClientTaskListWrapper />
           </div>
         </div>
       </div>

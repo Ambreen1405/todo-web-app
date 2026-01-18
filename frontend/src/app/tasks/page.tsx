@@ -113,7 +113,7 @@ const TasksPage: React.FC = () => {
     if (!token) return;
     try {
       const result = await tasksApi.updateTask(task.id, { completed: !task.completed }, token);
-      if (result.success) {
+      if (result.success && result.task) {
         // Use the updated task from the API response
         const updatedTask = result.task;
         setTasks(prev => prev.map(t => t.id === task.id ? updatedTask : t));
@@ -200,7 +200,7 @@ const TasksPage: React.FC = () => {
       };
 
       const result = await tasksApi.updateTask(editingTask.id, formattedData, token);
-      if (result.success) {
+      if (result.success && result.task) {
         // Update the task in the local state - use the response data
         const updatedTask = result.task;
         setTasks(prev => prev.map(t =>
