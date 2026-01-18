@@ -1,0 +1,34 @@
+# Security Scanning Configuration
+# This file contains configuration for various security scanning tools
+
+# Bandit - Python security linter
+[bandit]
+# Profile to use (optional)
+profile = default
+
+# Test IDs to skip
+skips = B101,B102  # Uncomment and customize as needed
+
+# Directories to exclude
+exclude_dirs = .venv,.git,__pycache__,node_modules,frontend
+
+# Files to exclude
+exclude_files =
+
+# Severity level to show (low, medium, high)
+severity = medium
+
+# Confidence level to show (low, medium, high)
+confidence = medium
+
+# Include specific test IDs only
+# tests = B101,B102,B103
+
+# Format for output
+format = screen
+
+# Output file (optional)
+# output_file = security_report.txt
+
+[bandit_tests]
+# Specific tests can be enabled here if needed

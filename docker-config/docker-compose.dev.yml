@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Development
+  db-dev:
+    image: postgres:13
+    container_name: todo-db-dev
+    environment:
+      POSTGRES_DB: todo_app_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Service for Development
+  backend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: todo-backend-dev
+    depends_on:
+      db-dev:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db-dev:5432/todo_app_dev
+      - SECRET_KEY=dev-secret-key-change-in-production
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - DEBUG=true
+      - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/src:/app/src  # Mount source for hot reloading
+      - ./logs:/app/logs
+    restart: unless-stopped
+    command: ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://ambreen-dev-todo-app.hf.space/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_dev_data:
